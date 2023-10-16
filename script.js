@@ -1,5 +1,8 @@
-let container = new Container();
-let block = new Block(container);
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d');
+
+let container = new Container(context);
+let block = new Block(container, SHAPES);
 let view = new View(container, block);
 
 let score = 0;

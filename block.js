@@ -1,9 +1,11 @@
 class Block {
-  constructor(container) {
+  constructor(container, shapes) {
     this.container = container;
     this.shape = null;
-    this.color = null;
+    this.shapes = shapes;
+    this.color = 'red';
     this.position = { x: 0, y: 0 }
+    changeShape();
   }
 
   moveLeft() {
@@ -33,6 +35,20 @@ class Block {
 
   changeShape() {
     // set new shape and new postion;
+    const shape = pickRandomShape();
+    this.shape = SHAPES[shape];
+    resetBlockPosition();
+
+    // Helper Functions
+    function pickRandomShape() {
+      const shapes = [ 'L', 'T', 'I', 'Z', 'S', 'J', 'O' ];
+      const randomIndex = Math.floor(Math.random() * shapes.length);
+      return this.shapes[randomIndex];
+    }
+    function resetBlockPosition() {
+      this.position.x = Math.floor(this.container.WIDTH / 2);
+      this.position.y = 0;
+    }
   }
 
   detectCollision(position) {
@@ -73,7 +89,59 @@ class Block {
   }
 
   draw() {
-    console.log(this.position.x, this.position.y);
+    //
   }
 
+}
+
+
+const SHAPES = {
+  'O': [
+    [0, 0, 0, 0],
+    [0, 1, 1, 0],
+    [0, 1, 1, 0],
+    [0, 0, 0, 0]
+  ],
+
+  'I': [
+    [0, 0, 0, 0],
+    [1, 1, 1, 1],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ],
+
+  'S': [
+    [0, 0, 0, 0],
+    [0, 0, 1, 1],
+    [0, 1, 1, 0],
+    [0, 0, 0, 0],
+  ],
+
+  'Z': [
+    [0, 0, 0, 0],
+    [0, 1, 1, 0],
+    [0, 0, 1, 1],
+    [0, 0, 0, 0],
+  ],
+
+  'L': [
+    [0, 0, 0, 0],
+    [0, 1, 1, 1],
+    [0, 1, 0, 0],
+    [0, 0, 0, 0],
+  ],
+
+  'J': [
+    [0, 0, 0, 0],
+    [0, 1, 1, 1],
+    [0, 0, 0, 1],
+    [0, 0, 0, 0],
+  ],
+
+  'T': [
+    [0, 0, 0, 0],
+    [0, 1, 1, 1],
+    [0, 0, 1, 0],
+    [0, 0, 0, 0],
+  ]
 }

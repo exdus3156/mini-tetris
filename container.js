@@ -1,9 +1,10 @@
 class Container {
-  constructor() {
+  constructor(context) {
     this.WIDTH = 13;
     this.HEIGHT = 20;
     this.box = null;
     this.initBox();
+    this.ctx = context;
   }
   
   initBox() {
@@ -35,7 +36,11 @@ class Container {
   }
 
   draw() {
-    //
+    for (let i = 0; i < this.box.length; i++) {
+      for (let j = 0; j < this.box[i].length; j++) {
+        //
+      }
+    }
   }
 
   checkGameOver() {
