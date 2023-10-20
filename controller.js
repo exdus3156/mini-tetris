@@ -1,49 +1,46 @@
-let isStart = false;
-const controller = Object.create(null);
+class Controller {
+  constructor(service) {
+    this.service = service;
+    this.isGameStarted = false;
+  }
 
-controller.rotate = function() {
-  window.addEventListener('keydown', (keyEvent) => {
-    if (isStart) {
-      if (keyEvent.code === 'ArrowUp') {
-        block.rotate();
-      }
+  init() {
+    // Arrow Key Pressed
+    window.addEventListener('keydown', this.keyPress);
+
+    // Start Button Clicked
+    const startBtn = document.getElementById("game-start-button");
+    startBtn.addEventListener('click', this.clickStartButton);
+  }
+
+  keyPress(keyEvent) {
+    const code = keyEvent.code;
+    switch(code) {
+      case 'ArrowUp':
+        this.service.rotateBlock(); 
+        break;
+      case 'ArrowDown':
+        this.service.fallBlock(); 
+        break;
+      case 'ArrowLeft':
+        this.service.moveBlockLeft(); 
+        break;
+      case 'ArrowRight':
+        this.service.moveBlockRight(); 
+        break;
     }
-  })
-}
+  }
 
-controller.moveBlock = function() {
-  window.addEventListener('keydown', (keyEvent) => {
-    if (isStart) {
-      const keyCode = keyEvent.code;
-      switch(keyCode) {
-        case 'ArrowLeft': 
-          block.moveLeft();
-          break;
-        case 'ArrowRight':
-          block.moveRight();
-          break;
-        case 'ArrowDown':
-          block.moveDown();
-          break;
-      }
-    }
-  })
-}
+  clickStartButton() {
+    // Already started, then pass.
+    if (this.isGameStarted) return;
 
-controller.startButton = function() {
-  const startBtn = document.getElementById("game-start-button");
-  startBtn.addEventListener('click', function() {
+    // toggle start banner & game canvas
     const gameMenu = document.getElementById("game-menu");
     const canvas = document.getElementById("canvas");
-    this.hidden = true;
     gameMenu.hidden = true;
     canvas.hidden = false;
-    isStart = true;
-  })
-}
 
-controller.init = function() {
-  this.rotate();
-  this.moveBlock();
-  this.startButton();
+    this.isGameStarted = true;
+  }
 }
